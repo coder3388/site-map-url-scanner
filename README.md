@@ -9,4 +9,10 @@ This project is a spring boot project, and scans the value of <loc> elements in 
   
   The project had been coded on Java 11.
   
+  To run this project apply following instructions->
+  1- checkout 
+  2- run mvn clean install command
+  3- type java -jar site-map-url-scanner-0.0.1-SNAPSHOT.jar
+  4- type http://localhost:8080/swagger-ui.html in your browser address bar then enter.
+  5- If everything is ok up to this point then you will see the endpoint list that you can try
   
