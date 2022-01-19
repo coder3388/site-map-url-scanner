@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sitemap</groupId>
-	<artifactId>scanner</artifactId>
+	<artifactId>site-map-url-scanner</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>scanner</name>
+	<name>site-map-url-scanner</name>
 	<description>Site map scanner project</description>
 	<properties>
 		<java.version>11</java.version>
