@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,7 +21,9 @@ import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.xml.sax.SAXException;
 
+import com.sitemap.scanner.domain.OperationDetail;
 import com.sitemap.scanner.domain.SiteMapUrlEntry;
+import com.sitemap.scanner.dto.OperationDetailDTO;
 import com.sitemap.scanner.dto.SiteMapUrlEntryDTO;
 import com.sitemap.scanner.service.SiteMapUrlEntryService;
 import com.sitemap.scanner.service.SiteMapUrlExtractorService;
@@ -48,9 +51,10 @@ class ScannerApplicationTests {
 	@BeforeTestClass
 	void beforeTests() {
 		mongoTemplate.remove(SiteMapUrlEntry.class);
+		mongoTemplate.remove(OperationDetail.class);
 	}
 	
-//	@Test
+	@Test
 	void testCrudServiceMethods_noErrorShouldThrown() {
 		SiteMapUrlEntryDTO entry = SiteMapUrlEntryDTO.builder().domainName("hurriyet")
 				.url("https://www.hurriyet.com.tr/gundem/usakta-hastaneyi-sarsan-skandal-doktor-tutuklandi-41983666")
@@ -65,10 +69,12 @@ class ScannerApplicationTests {
 	
 	@Test
 	void parsexml_noErrorShouldThrown() throws SAXException, IOException, ParserConfigurationException {
-		siteMapUrlExtractorService.extractUrls("https://www.hurriyet.com.tr/sitemaps/newssitemap.xml");
-		assertTrue(true);
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource("hurriyet_newssitemap.xml").getFile());
+
+		OperationDetailDTO operationDetail = siteMapUrlExtractorService.extractUrls(file.toURI().toString());
+		assertTrue(operationDetail.getId()!=null);
 	}
-	
 	
 
 }
